@@ -7,6 +7,10 @@ test.describe("Checkout challange", async () => {
     await page.goto("https://practicesoftwaretesting.com/");
   });
 
+  test.afterEach(async ({ page }) => {
+    await page.close();
+  }); 
+
   test("buy now pay later", async ({ page, headless }) => {
     await page.getByText("Claw Hammer with Shock Reduction Grip").click();
     await page.getByTestId("add-to-cart").click();
@@ -24,7 +28,7 @@ test.describe("Checkout challange", async () => {
     await page.getByTestId("postal_code").fill("95814");
     await page.getByTestId("proceed-3").click();
     await expect(page.getByTestId("finish")).toBeDisabled();
-    await page.getByTestId("payment-method").selectOption("Buy Now Pay Later");
+    await page.getByTestId("payment-method").selectOption("Buy Now Pay Later")
     await page
       .getByTestId("monthly_installments")
       .selectOption("6 Monthly Installments");
